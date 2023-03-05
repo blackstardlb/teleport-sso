@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  sso:
+    image: "ghcr.io/blackstardlb/teleport-sso"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./config:/config"

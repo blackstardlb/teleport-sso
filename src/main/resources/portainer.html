@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reload</title>
+    <script>
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function deleteCookie(name) {
+            if (getCookie(name)) {
+                document.cookie = name + "=;path=/" +
+                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+        }
+
+        window.onload = function () {
+            let newJwt = getCookie("new_portainer_jwt")
+            if (newJwt) {
+                deleteCookie("new_portainer_jwt")
+                localStorage.setItem("portainer.JWT", "\"" + newJwt + "\"")
+            }
+            let currentJwt = localStorage.getItem("portainer.JWT")
+            document.cookie = "portainer_jwt=" + currentJwt + ";path=/";
+            window.location.reload(true);
+        }
+    </script>
+</head>
+
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+</body>
+</html>
